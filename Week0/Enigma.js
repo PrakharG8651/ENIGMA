@@ -44,7 +44,6 @@ function rotorRotation(enigma){
 }
 function encryptLetter(letter, enigma) {
    var index = letter.charCodeAt(0) - 65;
-
    // Forward pass through rotors
    for (var i = 2; i >= 0; i--) {
       index = (index + enigma.rotorOffset[i]) % 26;
@@ -57,12 +56,10 @@ function encryptLetter(letter, enigma) {
 
    // Reverse pass through rotors
    for (var i = 0; i < 3; i++) {
-      var shiftedIndex = (index + enigma.rotorOffset[i]) % 26;
-      var letterAtIndex = String.fromCharCode(shiftedIndex + 65);
+      var letterAtIndex = String.fromCharCode(index + 65);
       index = ROTOR_PERMUTATIONS[i].indexOf(letterAtIndex);
       index = (index - enigma.rotorOffset[i] + 26) % 26;
    }
-
    rotorRotation(enigma);
    return String.fromCharCode(index + 65);
 }
